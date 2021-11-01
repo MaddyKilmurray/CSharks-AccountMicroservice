@@ -29,7 +29,7 @@ public class Account {
         private String city;
         private Countries country;
 
-        public Account(Industry industry, int employeeCount, String city, String country) {
+        public Account(Industry industry, int employeeCount, String city, Countries country) {
             setIndustry(industry);
             setEmployeeCount(employeeCount);
             setCity(city);
@@ -57,19 +57,6 @@ public class Account {
         }
 
         this.city = city;
-    }
-
-    public void setCountry(String country) {
-        if (country.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"No country input. Please try again.");
-        }
-        else if(country.length()>25){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Exceeds maximum value of 25 characters. Please, try again.");
-        }
-        else if(Countries.getCountry(country) == Countries.NONE){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "That is not a real country. Please try again.");
-        }
-        this.country = Countries.getCountry(country);
     }
 
 }
