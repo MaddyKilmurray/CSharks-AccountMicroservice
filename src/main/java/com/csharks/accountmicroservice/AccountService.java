@@ -6,10 +6,13 @@ import com.csharks.accountmicroservice.enums.Countries;
 import com.csharks.accountmicroservice.enums.Industry;
 import com.csharks.accountmicroservice.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +48,35 @@ public class AccountService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Requested account could not be found.");
         }
         accountRepository.delete(foundAccount.get());
+    }
+
+    public Double findMeanEmployeeCount() {
+        Optional<Double> mean = accountRepository.findMeanEmployeeCount();
+        return mean.get();
+    }
+
+    public Long findMaxEmployeeCount() {
+        Optional<Integer> max = accountRepository.findMaxEmployeeCount();
+        return Long.valueOf(max.get());
+    }
+
+    public Long findMinEmployeeCount() {
+        Optional<Integer> min = accountRepository.findMinEmployeeCount();
+        return Long.valueOf(min.get());
+    }
+
+    public Long getMedianEmployeeCount(){
+        int[] medianStep1 = accountRepository.findMedianEmployeeCountStep1();
+        try {
+            int sizeOfArray = medianStep1.length;
+            if (sizeOfArray % 2 == 1) {
+                return Long.valueOf(medianStep1[(sizeOfArray + 1) / 2 - 1]);
+            } else {
+                return Long.valueOf((medianStep1[sizeOfArray / 2 - 1] + medianStep1[sizeOfArray / 2]) / 2);
+            }
+        }catch (ArrayIndexOutOfBoundsException e){
+            return Long.valueOf(0);
+        }
     }
 
     public AccountDTO convertToAccountDTO(Account account) {

@@ -10,27 +10,48 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/accounts")
 public class AccountController {
 
     @Autowired
     AccountService accountService;
 
-    @GetMapping("/accounts")
+    @GetMapping
     public List<Account> findAll() {
         return accountService.findAll();
     }
 
-    @GetMapping("/accounts/{id}")
+    @GetMapping("/{id}")
     public AccountDTO findById(@PathVariable(name = "id") Long id) {
         return accountService.findById(id);
     }
 
-    @PostMapping("/accounts")
+    @GetMapping("/mean")
+    public Double findMeanEmployeeCount() {
+        return accountService.findMeanEmployeeCount();
+    }
+
+    @GetMapping("/max")
+    public Long findMaxEmployeeCount() {
+        return accountService.findMaxEmployeeCount();
+    }
+
+    @GetMapping("/min")
+    public Long findMinEmployeeCount() {
+        return accountService.findMinEmployeeCount();
+    }
+
+    @GetMapping("/median")
+    public Long findMedianEmployeeCount() {
+        return accountService.getMedianEmployeeCount();
+    }
+
+    @PostMapping
     public AccountDTO create(@RequestBody AccountDTO accountDTO) {
         return accountService.create(accountDTO);
     }
 
-    @DeleteMapping("/accounts/{id}")
+    @DeleteMapping("{id}")
     public void remove(@PathVariable(name = "id") Long id) {
         accountService.delete(id);
     }
