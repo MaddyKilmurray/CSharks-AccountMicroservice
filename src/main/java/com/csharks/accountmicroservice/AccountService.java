@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public class AccountService {
 
     public AccountDTO findById(Long id) {
         Optional<Account> foundAccount = accountRepository.findById(id);
-        if (foundAccount.isEmpty()) {
+        if (!foundAccount.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Requested account could not be found.");
         }
         return convertToAccountDTO(foundAccount.get());
@@ -44,7 +45,7 @@ public class AccountService {
 
     public void delete(Long id) {
         Optional<Account> foundAccount = accountRepository.findById(id);
-        if (foundAccount.isEmpty()) {
+        if (!foundAccount.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Requested account could not be found.");
         }
         accountRepository.delete(foundAccount.get());
@@ -77,6 +78,18 @@ public class AccountService {
         }catch (ArrayIndexOutOfBoundsException e){
             return Long.valueOf(0);
         }
+    }
+
+    public List<Long> getListIdByIndustry(String industry){
+        return accountRepository.findByIndustry(industry);
+    }
+    public List<Long> getListIdByCountry(Countries country){
+        List<Account> accountList = accountRepository.findIdByCountry(country);
+        List<Long> listId = new ArrayList<Long>();
+        for(Account account: accountList) {
+            listId.add(account.getId());
+        }
+        return listId;
     }
 
     public AccountDTO convertToAccountDTO(Account account) {

@@ -1,8 +1,10 @@
 package com.csharks.accountmicroservice.repository;
 
 import com.csharks.accountmicroservice.dao.Account;
+import com.csharks.accountmicroservice.enums.Countries;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,5 +30,10 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     //Report Minimum  employee count for all Accounts
     @Query("SELECT MIN(employeeCount) FROM Account")
     Optional<Integer> findMinEmployeeCount();
+
+    @Query(value = "SELECT id FROM account WHERE industry = :industry", nativeQuery = true)
+    List<Long> findByIndustry(@Param("industry") String industry);
+
+    List<Account> findIdByCountry(Countries country);
 
 }

@@ -2,6 +2,7 @@ package com.csharks.accountmicroservice;
 
 import com.csharks.accountmicroservice.dao.Account;
 import com.csharks.accountmicroservice.dto.AccountDTO;
+import com.csharks.accountmicroservice.enums.Countries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -44,6 +45,16 @@ public class AccountController {
     @GetMapping("/median")
     public Long findMedianEmployeeCount() {
         return accountService.getMedianEmployeeCount();
+    }
+
+    @GetMapping("/industry/{industry}")
+    public List<Long> listIdByIndustry(@PathVariable String industry){
+        return accountService.getListIdByIndustry(industry);
+    }
+
+    @GetMapping("/country/{country}")
+    public List<Long> listIdByCountry(@PathVariable Countries country){
+        return accountService.getListIdByCountry(country);
     }
 
     @PostMapping
