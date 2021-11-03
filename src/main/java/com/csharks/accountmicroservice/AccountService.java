@@ -111,4 +111,8 @@ public class AccountService {
                 account.getEmployeeCount(),account.getCity(), Countries.getCountry(account.getCountry()));
         return convertedAccount;
     }
+
+    public List<Long> getListIdByCity(String city){
+        return accountRepository.findByCity(city);
+    }
 }

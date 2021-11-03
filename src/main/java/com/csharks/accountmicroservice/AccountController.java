@@ -76,4 +76,9 @@ public class AccountController {
     public void remove(@PathVariable(name = "id") Long id) {
         accountService.delete(id);
     }
+
+    @GetMapping("/cityName/{city}")
+    public List<Long> listIdByCity(@PathVariable String city) {
+        return accountService.getListIdByCity(city);
+    }
 }

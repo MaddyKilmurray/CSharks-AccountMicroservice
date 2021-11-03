@@ -41,4 +41,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query(value = "SELECT city FROM account WHERE id = :id", nativeQuery = true)
     String getCityById(@Param("id") Long id);
+
+    @Query(value = "SELECT id FROM account WHERE city = :city", nativeQuery = true)
+    List<Long> findByCity(@Param("city") String city);
 }
