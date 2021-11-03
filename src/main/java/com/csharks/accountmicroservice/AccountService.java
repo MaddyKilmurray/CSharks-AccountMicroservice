@@ -51,6 +51,14 @@ public class AccountService {
         accountRepository.delete(foundAccount.get());
     }
 
+    public List<String> listOfCities() {
+        return accountRepository.getCities();
+    }
+
+    public String getCityById(Long id) {
+        return accountRepository.getCityById(id);
+    }
+
     public Double findMeanEmployeeCount() {
         Optional<Double> mean = accountRepository.findMeanEmployeeCount();
         return mean.get();

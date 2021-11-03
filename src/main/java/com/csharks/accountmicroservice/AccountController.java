@@ -57,6 +57,16 @@ public class AccountController {
         return accountService.getListIdByCountry(country);
     }
 
+    @GetMapping("/city")
+    public List<String> getCityList() {
+        return accountService.listOfCities();
+    }
+
+    @GetMapping("/city/{id}")
+    public String getCityById(@PathVariable(name = "id") Long id) {
+        return accountService.getCityById(id);
+    }
+
     @PostMapping
     public AccountDTO create(@RequestBody AccountDTO accountDTO) {
         return accountService.create(accountDTO);
